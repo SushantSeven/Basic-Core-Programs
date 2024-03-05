@@ -21,8 +21,6 @@ def flip(n):
     print(f"The percentage of heads is {(heads/n)*100}%")
     print(f"The percentage of tails is {(tails/n)*100}%")
 
-
-
 if __name__=='__main__':
     flip(int(input("ENter the number of flips")))
 
