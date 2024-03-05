@@ -19,7 +19,6 @@ def harmonic(n):
             res += 1 / i
         return (1 / res)
 
-
 if __name__ == '__main__':
     num = int(input("Enter the Number: "))
     result = harmonic(num)
