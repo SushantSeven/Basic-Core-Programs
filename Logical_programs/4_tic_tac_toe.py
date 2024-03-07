@@ -1,78 +1,136 @@
+# @Author: Sushant Das
+
+# @Date: 2021-03-07
+
+# @Last Modified by: Author Name
+
+# @Last Modified time: 2021-02-11 
+
+# @Title : Program to start and stop stopwatch
+
+
 import random
-    
-# print board
-# print(f"0 | 2 | 1")
-    # print("--|---|--")
-    # print(f"3 | 4 | 5")
-    # print("--|---|--")
-    # print(f"6 | 7 | 8")
-# place the move
 
-# switch user
-# place the move
-# check win lose tie
-
-def print_board(board):
-    # board[move] = user
+# method to print the game board
+def print_board(board, user):
     print(f"{board[0]} | {board[1]} | {board[2]}")
     print("--|---|--")
     print(f"{board[3]} | {board[4]} | {board[5]}")
     print("--|---|--")
     print(f"{board[6]} | {board[7]} | {board[8]}")
-
-def move_placement(board):
-    move = int(input('ENter a number between 0 to 9'))
-    board[move] = 'X'
-    print_board(board)
-
-
-def play_game():
-    board = ["-","-","-","-","-","-","-","-", "-"]
-    while True:
-        move_placement(board) 
-play_game()
-
-
-# def print_board(board):
-#     print(f"{board[0]} | {board[1]} | {board[2]}")
-#     print("--|---|--")
-#     print(f"{board[3]} | {board[4]} | {board[5]}")
-#     print("--|---|--")
-#     print(f"{board[6]} | {board[7]} | {board[8]}")
-
-# def move_placement(board, user):
-#     while True:
-#         move = int(input('Enter a number between 1 to 9: ')) - 1
-#         if 0 <= move <= 8 and board[move] == "-":
-#             board[move] = user
-#             break
-#         else:
-#             print("Invalid move. Please try again.")
+    print("\n")
     
-#     print_board(board)
+    check_row_win(board, user)
+    check_col_win(board, user)
+    check_diag_win(board, user)
+    check_tie(board)
 
-# def check_winner(board, user):
-#     # Check rows, columns, and diagonals for a win
-#     win_conditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
-#     for condition in win_conditions:
-#         if all(board[pos] == user for pos in condition):
-#             return True
-#     return False
+# method to check if there is a win horizontally
+def check_row_win(board, user):
+    if board[0]==board[1]==board[2] and board[0]!="-":
+        if user == "X":
+            print(f"You Won!")
+            exit()
+        else:
+            print("You lost! Better luck next time! ")
+            exit()
 
-# def play_game():
-#     board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]
-#     print_board(board)
-#     current_player = 'X'
+    elif board[3]==board[4]==board[5] and board[3]!="-":
+        if user == "X":
+            print(f"You Won!")
+            exit()
+        else:
+            print("You lost! Better luck next time! ")
+            exit()
 
-#     while True:
-#         print(f"Player {current_player}'s turn:")
-#         move_placement(board, current_player)
-#         if check_winner(board, current_player):
-#             print(f"Player {current_player} wins!")
-#             break
-#         if "-" not in board:
-#             print("It's a tie!")
-#             break
-#         current_player = 'O' if current_player == 'X' else 'X'
+    elif board[6]==board[7]==board[8] and board[6]!="-":
+        if user == "X":
+            print(f"You Won!")
+            exit()
+        else:
+            print("You lost! Better luck next time! ")
+            exit()
 
-# play_game()
+# method to check if there is a win vertically
+def check_col_win(board, user):
+    if board[0]==board[3]==board[6] and board[0]!="-":
+        if user == "X":
+            print(f"You Won!")
+            exit()
+        else:
+            print("You lost! Better luck next time! ")
+            exit()
+
+    elif board[1]==board[4]==board[7] and board[1]!="-":
+        if user == "X":
+            print(f"You Won!")
+            exit()
+        else:
+            print("You lost! Better luck next time! ")
+            exit()
+
+    elif board[2]==board[5]==board[8] and board[2]!="-":
+        if user == "X":
+            print(f"You Won!")
+            exit()
+        else:
+            print("You lost! Better luck next time! ")
+            exit()
+
+# method to chech if there is a win diagonaly
+def check_diag_win(board, user):
+    if board[0]==board[4]==board[8] and board[0]!="-":
+        if user == "X":
+            print(f"You Won!")
+            exit()
+        else:
+            print("You lost! Better luck next time! ")
+            exit()
+    
+    elif board[2]==board[4]==board[6] and board[2]!="-":
+        if user == "X":
+            print(f"You Won!")
+            exit()
+        else:
+            print("You lost! Better luck next time! ")
+            exit()
+# method to check if there is a tie
+def check_tie(board): 
+    if "-" not in board:
+        print("Its a tie !")
+        exit()
+
+#  method to place the player's move on the board
+def move_placement(board, user):
+    if user == 'X':
+        print(f"Its your turn \n")
+        move = int(input('Enter a number between 0 to 8 : '))
+    else:
+        print("Its computer's turn \n")
+        move = random.randint(0, 8)
+    if move>=0 and move<=8: #check if move is valid
+        if board[move]=="-":  # check if another player is not already in the place
+            board[move] = user
+            print_board(board, user)
+        else:
+            print("Player already in place! try another move! ")
+            return move_placement(board,user)
+    else:
+        print("Invalid move! ") # if the move is invalid call the move_placement function again
+        return move_placement(board,user)
+
+# method to start the game
+def play_game():
+    user = 'O'
+    board = ["-","-","-","-","-","-","-","-", "-"]
+    print_board(board,user)
+    while True: # loop untill a player wins
+        if user == 'O':
+            user = 'X'
+        else:
+            user = 'O'
+        move_placement(board, user) 
+
+if __name__=="__main__":
+    print("******Welcome to the Game!!!*****")
+    play_game()
