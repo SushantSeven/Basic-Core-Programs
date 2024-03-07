@@ -6,7 +6,7 @@
 
 # @Last Modified time: 2021-02-11 
 
-# @Title : Program to start and stop stopwatch
+# @Title : Program to create a tic-tac-toe game
 
 import time
 
